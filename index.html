@@ -1,416 +1,670 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vinayak Shukla | Flutter &amp; Android Developer</title>
-  <meta name="description" content="Vinayak Shukla, Flutter and Android developer with 10+ apps in production on Google Play and the App Store.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinayak Shukla | Flutter &amp; Android Developer</title>
+<meta name="description" content="Vinayak Shukla, Flutter and Android developer with 10+ apps live on Google Play and the App Store.">
+<meta property="og:title" content="Vinayak Shukla | Flutter & Android Developer">
+<meta property="og:description" content="Flutter and Android developer with 10+ apps live on Google Play and the App Store.">
+<meta name="theme-color" content="#06080D">
+<link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080D; --bg2:#0B0F17; --card:#0F1420; --card2:#141B2B;
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --ink:#F2F5FA; --muted:#8C97AB; --dim:#5D687D;
+  --g1:#4AE3A0; --g2:#22C7E0; --g3:#6D7CFF;
+  --grad:linear-gradient(100deg,var(--g1),var(--g2) 50%,var(--g3));
+  --head:"Sora",system-ui,sans-serif; --body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --r:22px; --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+main{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--g2);color:#04110C}
+.container{max-width:1180px;margin:0 auto;padding:0 24px}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+:focus-visible{outline:2px solid var(--g2);outline-offset:3px;border-radius:8px}
 
-  <meta property="og:title" content="Vinayak Shukla | Flutter & Android Developer">
-  <meta property="og:description" content="Flutter and Android developer with 10+ apps in production on Google Play and the App Store.">
-  <meta property="og:type" content="website">
+/* Background */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.blob{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:.35}
+.blob.b1{width:560px;height:560px;background:#1BA87A;top:-220px;left:-160px;animation:float1 20s ease-in-out infinite alternate}
+.blob.b2{width:520px;height:520px;background:#3B4BD8;top:10%;right:-220px;animation:float1 24s ease-in-out infinite alternate-reverse}
+@keyframes float1{to{transform:translate(80px,120px) scale(1.1)}}
+.cursor-glow{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(34,199,224,.12),transparent 60%);transform:translate(-50%,-50%);left:-999px;top:-999px;transition:opacity .3s}
+main,nav,footer{position:relative;z-index:2}
 
-  <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml">
+/* Nav */
+nav{position:fixed;top:16px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px}
+.nav-inner{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 16px;border-radius:99px;background:rgba(15,20,32,.6);
+  border:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:background .3s,box-shadow .3s;max-width:100%}
+nav.scrolled .nav-inner{background:rgba(11,15,23,.85);box-shadow:0 10px 40px -10px rgba(0,0,0,.6)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:700;font-size:15px;margin-right:12px;white-space:nowrap}
+.logo img{width:30px;height:30px;border-radius:9px}
+.nav-links{display:flex;gap:2px}
+.nav-links a{padding:8px 14px;border-radius:99px;font-size:14px;color:var(--muted);transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links a.on{color:var(--ink);background:rgba(255,255,255,.06)}
+.nav-cta{padding:9px 16px;border-radius:99px;background:var(--ink);color:#06080D;font-weight:600;font-size:14px;white-space:nowrap;transition:transform .25s var(--ease)}
+.nav-cta:hover{transform:scale(1.04)}
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--grad);transform-origin:0 50%;transform:scaleX(0);z-index:60}
 
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/custom.css">
+/* Buttons */
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:14px;font-weight:600;font-size:15px;
+  transition:transform .3s var(--ease),box-shadow .3s,background .3s;will-change:transform;cursor:pointer;border:0;font-family:inherit}
+.btn svg{width:18px;height:18px;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.btn-primary{background:var(--grad);color:#04110C;box-shadow:0 12px 40px -12px rgba(34,199,224,.7)}
+.btn-primary:hover{box-shadow:0 18px 50px -10px rgba(74,227,160,.8)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--ink);border:1px solid var(--line2)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+/* Hero */
+.hero{min-height:100svh;display:flex;align-items:center;padding:130px 0 80px}
+.hero .container{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 10px;border-radius:99px;border:1px solid var(--line2);background:rgba(255,255,255,.04);font-size:13px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--g1);animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(74,227,160,.6)}100%{box-shadow:0 0 0 12px rgba(74,227,160,0)}}
+.hero h1{font-family:var(--head);font-weight:800;font-size:clamp(42px,6.2vw,80px);line-height:1.02;letter-spacing:-.035em;margin:24px 0 22px}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:inline-block;animation:rise 1s var(--ease) backwards}
+.hero h1 .line:nth-child(2) span{animation-delay:.1s}
+.hero h1 .line:nth-child(3) span{animation-delay:.2s}
+@keyframes rise{from{transform:translateY(105%)}}
+.hero p.sub{font-size:clamp(17px,1.6vw,19px);color:var(--muted);max-width:500px}
+.hero p.sub b{color:var(--ink);font-weight:600}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.fade-up{animation:fadeUp 1s var(--ease) backwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}}
+.hero-stats{display:flex;gap:34px;margin-top:46px;flex-wrap:wrap}
+.hero-stats div{display:grid}
+.hero-stats strong{font-family:var(--head);font-size:30px;font-weight:700;line-height:1}
+.hero-stats span{font-size:13px;color:var(--dim);margin-top:6px}
+
+/* Phones */
+.phones{position:relative;height:600px;perspective:1400px}
+.phone{position:absolute;width:262px;height:540px;border-radius:46px;padding:11px;
+  background:linear-gradient(150deg,#3A4256,#11151F 40%,#0A0D14);
+  box-shadow:0 50px 100px -30px rgba(0,0,0,.8),inset 0 0 0 1.5px rgba(255,255,255,.1),inset 0 0 0 4px #05070B;transition:transform .8s var(--ease)}
+.phone::before{content:"";position:absolute;right:-3px;top:130px;width:3px;height:64px;border-radius:2px;background:#2A3142}
+.phone .screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#0A101B;color:#E8EDF6;font-family:var(--body)}
+.phone .island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:84px;height:24px;border-radius:14px;background:#000;z-index:3}
+.phone.front{left:18%;top:20px;z-index:2;transform:rotate(-4deg);animation:bob 7s ease-in-out infinite}
+.phone.back{left:48%;top:70px;z-index:1;transform:rotate(7deg) scale(.92);filter:brightness(.85);animation:bob 7s ease-in-out -3.5s infinite}
+.phones:hover .phone.front{transform:rotate(-1deg) translateX(-20px)}
+.phones:hover .phone.back{transform:rotate(4deg) scale(.94) translateX(30px);filter:none}
+@keyframes bob{50%{translate:0 -14px}}
+.sb{display:flex;justify-content:space-between;padding:14px 22px 0;font-size:11px;font-weight:600}
+.app{padding:22px 14px 14px;display:grid;gap:11px}
+.app-h{display:flex;justify-content:space-between;align-items:center}
+.app-h b{font-family:var(--head);font-size:17px}
+.tag{font-size:9px;font-weight:700;padding:3px 7px;border-radius:6px;background:rgba(74,227,160,.15);color:var(--g1);letter-spacing:.06em}
+.tag.red{background:rgba(255,94,94,.15);color:#FF7A7A}
+.score{border-radius:18px;padding:15px;background:linear-gradient(135deg,#16A57A,#127C9A);display:grid;gap:4px;position:relative;overflow:hidden}
+.score::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;border:22px solid rgba(255,255,255,.08);right:-50px;top:-50px}
+.score small{font-size:11px;opacity:.85}
+.score .big{font-family:var(--head);font-size:32px;font-weight:800;line-height:1.1}
+.balls{display:flex;gap:5px}
+.balls i{flex:1;height:26px;border-radius:8px;background:#151D2C;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;color:#8C97AB}
+.balls i.f{background:var(--g1);color:#03140C}.balls i.s{background:var(--g2);color:#03140C}.balls i.w{background:#FF5E5E;color:#2A0505}
+.row{display:flex;justify-content:space-between;padding:11px 12px;border-radius:13px;background:#121A28;font-size:12px}
+.row b{color:var(--g1);font-weight:600}
+.player{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:13px;background:#121A28;font-size:12px}
+.player .av{width:28px;height:28px;border-radius:50%;flex-shrink:0}
+.player .meta{flex:1;display:grid}
+.player .meta small{color:#6E7A90;font-size:10px}
+.lb{display:grid;gap:8px}
+.lb .r{display:grid;grid-template-columns:20px 30px 1fr auto;gap:9px;align-items:center;padding:10px;border-radius:13px;background:#121A28;font-size:12px}
+.lb .r .n{color:#6E7A90;font-weight:600}
+.lb .r .av{width:30px;height:30px;border-radius:50%}
+.lb .r .bar{height:6px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}
+.lb .r .bar i{display:block;height:100%;border-radius:4px;background:var(--grad)}
+.lb .r.top{background:linear-gradient(120deg,rgba(109,124,255,.35),rgba(74,227,160,.2))}
+.lb .r.top .n{color:#F7C64E}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:8px;height:110px;padding-top:6px}
+.podium div{width:62px;border-radius:12px 12px 4px 4px;display:grid;justify-items:center;align-content:start;padding-top:8px;font-size:11px;font-weight:700}
+.podium .p1{height:100%;background:linear-gradient(#F7C64E,#B8892A);color:#2A1D00}
+.podium .p2{height:78%;background:linear-gradient(#C9D2E3,#7D879A);color:#141A24}
+.podium .p3{height:62%;background:linear-gradient(#E39A6E,#9C5D3A);color:#2A1206}
+.podium span{width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.25);margin-bottom:4px}
+.tabbar{position:absolute;left:12px;right:12px;bottom:12px;height:52px;border-radius:18px;background:rgba(18,26,40,.95);display:flex;justify-content:space-around;align-items:center}
+.tabbar i{width:20px;height:20px;border-radius:6px;background:#263045}
+.tabbar i.on{background:var(--grad)}
+.float{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;padding:11px 15px;border-radius:16px;background:rgba(20,27,43,.82);
+  border:1px solid var(--line2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:13px;font-weight:600;box-shadow:0 20px 50px -20px rgba(0,0,0,.7);white-space:nowrap;animation:bob 6s ease-in-out infinite}
+.float .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center}
+.float .ic svg{width:18px;height:18px}
+.float small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+.float.f1{left:-2%;top:150px}
+.float.f2{right:0;top:300px;animation-delay:-2s}
+.float.f3{left:6%;bottom:40px;animation-delay:-4s}
+
+/* Marquee */
+.marquee{border-block:1px solid var(--line);padding:22px 0;overflow:hidden;background:rgba(11,15,23,.6);position:relative;z-index:2;
+  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.track{display:flex;gap:56px;width:max-content;animation:scroll 34s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.track span{display:flex;align-items:center;gap:12px;font-family:var(--head);font-weight:600;font-size:20px;color:#7C879B;white-space:nowrap}
+.track svg{width:24px;height:24px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* Sections */
+section{padding:120px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g2)}
+.eyebrow::before{content:"";width:24px;height:2px;border-radius:2px;background:var(--grad)}
+.sec-title{font-family:var(--head);font-weight:800;font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spacing:-.03em;margin-top:14px;max-width:760px}
+.sec-sub{color:var(--muted);font-size:18px;max-width:560px;margin-top:16px}
+.head{margin-bottom:56px}
+
+/* Bento */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(190px,auto);gap:18px}
+.tile{position:relative;border-radius:var(--r);background:var(--card);border:1px solid var(--line);padding:28px;overflow:hidden;transition:transform .4s var(--ease),border-color .4s}
+.tile::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(34,199,224,.12),transparent 40%)}
+.tile:hover{transform:translateY(-4px);border-color:var(--line2)}
+.tile:hover::before{opacity:1}
+.tile > *{position:relative}
+.tile h3{font-family:var(--head);font-size:20px;font-weight:700;letter-spacing:-.01em}
+.tile p{color:var(--muted);font-size:15px;margin-top:8px}
+.t-intro{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:linear-gradient(160deg,#111A28,#0B1019)}
+.t-intro .who{display:flex;align-items:center;gap:16px}
+.t-intro .who img{width:72px;height:72px;border-radius:20px}
+.t-intro .who b{font-family:var(--head);font-size:24px;display:block;line-height:1.2}
+.t-intro .who small{color:var(--g1);font-weight:600;font-size:14px}
+.t-intro .bio{font-size:17px;color:#B9C2D2;line-height:1.75}
+.t-intro .bio b{color:var(--ink)}
+.t-num{display:flex;flex-direction:column;justify-content:space-between}
+.t-num .n{font-family:var(--head);font-size:64px;font-weight:800;line-height:1;letter-spacing:-.04em}
+.t-plat{display:flex;flex-direction:column;justify-content:space-between}
+.plat-icons{display:flex;gap:12px}
+.plat-icons span{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:var(--card2);border:1px solid var(--line)}
+.plat-icons svg{width:26px;height:26px}
+.t-now{grid-column:span 2}
+.now-list{display:grid;gap:10px;margin-top:18px}
+.now-list div{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:14px;background:var(--card2);border:1px solid var(--line)}
+.now-list .pl{width:10px;height:10px;border-radius:50%;background:var(--g2);animation:ping 2s infinite;flex-shrink:0}
+.now-list b{font-family:var(--head);font-size:15px}
+.now-list small{color:var(--muted);margin-left:auto;font-size:13px;text-align:right}
+.t-stack{grid-column:span 2}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:11px;background:var(--card2);border:1px solid var(--line);font-size:13px;font-weight:500;transition:border-color .25s,transform .25s}
+.chip:hover{border-color:var(--g2);transform:translateY(-2px)}
+.chip svg{width:16px;height:16px}
+.t-hire{grid-column:span 2;background:var(--grad);color:#04110C;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border:0}
+.t-hire h3{font-size:26px}
+.t-hire p{color:rgba(4,17,12,.75)}
+.t-hire .btn{background:#06080D;color:var(--ink)}
+
+/* Work */
+.work{display:grid;gap:28px}
+.proj{display:grid;grid-template-columns:1.15fr .85fr;border-radius:28px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:border-color .4s,transform .5s var(--ease)}
+.proj:hover{border-color:var(--line2)}
+.proj:nth-child(even){grid-template-columns:.85fr 1.15fr}
+.proj:nth-child(even) .proj-media{order:2}
+.proj-media{position:relative;overflow:hidden;min-height:340px;background:#0B1220}
+.proj-media img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.proj:hover .proj-media img{transform:scale(1.05)}
+.proj-body{padding:44px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.status{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:6px 12px;border-radius:99px;font-size:12px;font-weight:600;background:rgba(34,199,224,.1);color:var(--g2);border:1px solid rgba(34,199,224,.25)}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.status.live{background:rgba(74,227,160,.1);color:var(--g1);border-color:rgba(74,227,160,.25)}
+.proj h3{font-family:var(--head);font-size:clamp(28px,3vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.proj p{color:var(--muted);font-size:16px}
+.proj ul{list-style:none;display:grid;gap:8px}
+.proj li{display:flex;gap:10px;font-size:15px;color:#C4CCDA}
+.proj li svg{width:18px;height:18px;flex-shrink:0;margin-top:3px;color:var(--g1)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tags span{font-size:12px;font-weight:600;padding:6px 11px;border-radius:9px;background:var(--card2);border:1px solid var(--line);color:#AEB8C9}
+
+/* Services */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc{position:relative;padding:30px 26px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .4s var(--ease),border-color .4s}
+.svc::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.svc:hover{transform:translateY(-6px);border-color:var(--line2)}
+.svc:hover::after{transform:scaleX(1)}
+.svc .ic{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(74,227,160,.16),rgba(109,124,255,.16));border:1px solid var(--line2);margin-bottom:22px;transition:transform .4s var(--ease)}
+.svc:hover .ic{transform:rotate(-8deg) scale(1.08)}
+.svc .ic svg{width:24px;height:24px;color:var(--g1)}
+.svc h3{font-family:var(--head);font-size:19px;font-weight:700}
+.svc p{color:var(--muted);font-size:15px;margin-top:8px}
+
+/* Process */
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative}
+.process::before{content:"";position:absolute;top:27px;left:6%;right:6%;height:2px;background:linear-gradient(90deg,var(--line2) 50%,transparent 0) 0 0/12px 2px}
+.step{position:relative;text-align:center;padding:0 10px}
+.step .n{width:56px;height:56px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;font-family:var(--head);font-weight:700;background:var(--bg);border:2px solid var(--line2);transition:all .4s var(--ease)}
+.step:hover .n{background:var(--grad);color:#04110C;border-color:transparent;transform:scale(1.1)}
+.step h3{font-family:var(--head);font-size:19px}
+.step p{color:var(--muted);font-size:15px;margin-top:8px}
+
+/* Contact */
+.contact-card{position:relative;border-radius:36px;padding:clamp(40px,7vw,90px);overflow:hidden;text-align:center;
+  background:radial-gradient(circle at 20% 0%,rgba(74,227,160,.25),transparent 50%),radial-gradient(circle at 80% 100%,rgba(109,124,255,.3),transparent 50%),var(--card);border:1px solid var(--line2)}
+.contact-card .ring{position:absolute;border-radius:50%;border:1px solid var(--line2);left:50%;top:50%;transform:translate(-50%,-50%);animation:pulse 6s ease-out infinite}
+.contact-card .ring:nth-child(2){animation-delay:-2s}.contact-card .ring:nth-child(3){animation-delay:-4s}
+@keyframes pulse{from{width:200px;height:200px;opacity:.8}to{width:1100px;height:1100px;opacity:0}}
+.contact-card > *{position:relative}
+.contact-card h2{font-family:var(--head);font-weight:800;font-size:clamp(38px,6vw,72px);line-height:1.02;letter-spacing:-.035em;max-width:820px;margin:16px auto 0}
+.contact-card p{color:var(--muted);font-size:18px;max-width:520px;margin:20px auto 0}
+.contact-card .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+
+footer{border-top:1px solid var(--line);padding:30px 0}
+footer .container{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:var(--dim);font-size:14px}
+.socials{display:flex;gap:10px}
+.socials a{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);transition:all .3s var(--ease)}
+.socials a:hover{border-color:var(--g2);transform:translateY(-3px);color:var(--g2)}
+.socials svg{width:18px;height:18px}
+
+/* Reveal */
+.reveal{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.hide{opacity:0;transform:translateY(40px)}
+
+/* Responsive */
+@media (max-width:1024px){
+  .hero .container{grid-template-columns:1fr;text-align:left}
+  .phones{height:560px;max-width:520px;margin:0 auto;width:100%}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .services,.process{grid-template-columns:repeat(2,1fr)}
+  .process::before{display:none}
+  .proj,.proj:nth-child(even){grid-template-columns:1fr}
+  .proj:nth-child(even) .proj-media{order:0}
+  .proj-media{min-height:260px}
+}
+@media (max-width:680px){
+  .nav-links{display:none}
+  .logo span{display:none}
+  .container{padding:0 18px}
+  section{padding:84px 0}
+  .bento,.services,.process{grid-template-columns:1fr}
+  .t-intro,.t-now,.t-stack,.t-hire{grid-column:auto;grid-row:auto}
+  .phones{height:520px;transform:scale(.88);transform-origin:top center;margin-bottom:-60px}
+  .phone.front{left:6%}.phone.back{left:40%}
+  .float.f2{right:-4%}
+  .proj-body{padding:28px}
+  .hero-stats{gap:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal.hide{opacity:1;transform:none}
+}
+</style>
 </head>
-
 <body>
 
-  <main>
+<div class="progress" id="progress"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="blob b1" aria-hidden="true"></div>
+<div class="blob b2" aria-hidden="true"></div>
+<div class="cursor-glow" id="glow" aria-hidden="true"></div>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" data-sidebar>
+<!-- SVG icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3"/></symbol>
+  <symbol id="i-android" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48 19.44 6.3a.38.38 0 0 0-.66-.38l-1.86 3.22a11.5 11.5 0 0 0-9.84 0L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 .8 18h22.4a10.8 10.8 0 0 0-5.6-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.6c-.02-2.33 1.9-3.45 1.99-3.5-1.08-1.58-2.77-1.8-3.37-1.82-1.43-.15-2.8.84-3.53.84-.73 0-1.85-.82-3.04-.8-1.56.03-3 .91-3.81 2.31-1.63 2.82-.42 6.99 1.17 9.28.78 1.12 1.7 2.38 2.91 2.33 1.17-.05 1.61-.75 3.02-.75 1.41 0 1.81.75 3.04.73 1.26-.02 2.05-1.14 2.82-2.27.89-1.3 1.25-2.56 1.27-2.62-.03-.01-2.44-.94-2.47-3.73zM14.06 5.75c.64-.78 1.08-1.86.96-2.94-.93.04-2.05.62-2.72 1.4-.6.69-1.12 1.79-.98 2.85 1.04.08 2.1-.53 2.74-1.31z"/></symbol>
+  <symbol id="i-flutter" viewBox="0 0 24 24" fill="currentColor"><path d="M14.3 1 3.7 11.6 7 14.9 21 1h-6.7zm-.1 9.8-6.1 6.1 6.1 6.1H21l-6.1-6.1 6.1-6.1h-6.8z"/></symbol>
+  <symbol id="i-dart" viewBox="0 0 24 24" fill="currentColor"><path d="M4.1 4.1 9.4 1h7.3l5.2 5.2v8.5L20 20l-5.2 2H6.5l-1.7-1.7L4.1 4.1zm1.6 1.6.6 13.5L18 7.6 10.3 1.9 5.7 5.7z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 1.8 13.5 12l-9.9 10.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1zm11 11.3 2.3 2.3-10.9 6.2 8.6-8.5zm3.4-3.4 2.8 1.6c.8.5.8 1.6 0 2.1l-2.8 1.6-2.5-2.5 2.5-2.8zM6 2.4l10.9 6.2-2.3 2.3L6 2.4z"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M8.5 16.5 13 8.5M15.5 16.5 11 8.5M7 13.5h10M15.5 16.5h1.5M8.5 16.5H7"/></symbol>
+  <symbol id="i-git" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M6 8.5v7M18 11.5c0 3-3 4-9.5 5"/></symbol>
+  <symbol id="i-speed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3.5 17a9 9 0 1 1 17 0"/><path d="M12 15l4.5-5"/><circle cx="12" cy="15.5" r="1.5"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 12 10 5 10-5M2 17l10 5 10-5"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.9.7-2.2-.1-3-.8-.8-2.1-.8-2.9 0zM12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.8l-6.3 3.6 1.5-7.1L1.8 9.4 9 8.6z"/></symbol>
+</svg>
 
-      <div class="sidebar-info">
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#home"><img src="./assets/images/favicon.svg" alt=""><span>Vinayak Shukla</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a>
+    </div>
+    <a class="nav-cta" href="#contact">Hire me</a>
+  </div>
+</nav>
 
-        <figure class="avatar-box">
-          <img src="./assets/images/avatar.svg" alt="Vinayak Shukla" width="80">
-        </figure>
+<main>
 
-        <div class="info-content">
-          <h1 class="name" title="Vinayak Shukla">Vinayak Shukla</h1>
-          <p class="title">Flutter &amp; Android Developer</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="container">
+    <div>
+      <span class="badge fade-up"><span class="dot"></span>Available for new projects</span>
+      <h1>
+        <span class="line"><span>I build mobile</span></span>
+        <span class="line"><span>apps people</span></span>
+        <span class="line"><span class="grad">love to use.</span></span>
+      </h1>
+      <p class="sub fade-up" style="animation-delay:.35s">Hi, I'm <b>Vinayak Shukla</b>, a Flutter &amp; Android developer with <b>10+ apps live</b> on Google Play and the App Store.</p>
+      <div class="ctas fade-up" style="animation-delay:.45s">
+        <a class="btn btn-primary magnet" href="#work">View my work <svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost magnet" href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener"><svg style="width:17px;height:17px"><use href="#i-linkedin"/></svg>Let's talk</a>
       </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-            <div class="icon-box"><ion-icon name="logo-linkedin"></ion-icon></div>
-            <div class="contact-info">
-              <p class="contact-title">LinkedIn</p>
-              <a href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener" class="contact-link">vinayak-shukla</a>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <div class="icon-box"><ion-icon name="logo-github"></ion-icon></div>
-            <div class="contact-info">
-              <p class="contact-title">GitHub</p>
-              <a href="https://github.com/vinayak-repo" target="_blank" rel="noopener" class="contact-link">vinayak-repo</a>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <div class="icon-box"><ion-icon name="phone-portrait-outline"></ion-icon></div>
-            <div class="contact-info">
-              <p class="contact-title">Apps shipped</p>
-              <p class="contact-link">10+ apps live</p>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <div class="icon-box"><ion-icon name="code-slash-outline"></ion-icon></div>
-            <div class="contact-info">
-              <p class="contact-title">Focus</p>
-              <p class="contact-link">Flutter · Android · iOS</p>
-            </div>
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><ion-icon name="logo-linkedin"></ion-icon></a>
-          </li>
-          <li class="social-item">
-            <a href="https://github.com/vinayak-repo" target="_blank" rel="noopener" class="social-link" aria-label="GitHub"><ion-icon name="logo-github"></ion-icon></a>
-          </li>
-        </ul>
-
-        <span class="status-badge"><span class="pulse"></span>Open to new projects</span>
-
+      <div class="hero-stats fade-up" style="animation-delay:.55s">
+        <div><strong class="grad">10+</strong><span>Apps in production</span></div>
+        <div><strong>Android</strong><span>&amp; iOS</span></div>
+        <div><strong>Flutter</strong><span>&amp; native Android</span></div>
       </div>
-
-    </aside>
-
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li class="navbar-item"><button class="navbar-link active" data-nav-link>About</button></li>
-          <li class="navbar-item"><button class="navbar-link" data-nav-link>Resume</button></li>
-          <li class="navbar-item"><button class="navbar-link" data-nav-link>Portfolio</button></li>
-          <li class="navbar-item"><button class="navbar-link" data-nav-link>Contact</button></li>
-        </ul>
-      </nav>
-
-
-      <!-- ABOUT -->
-      <article class="about active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            I'm Vinayak Shukla, a mobile application developer working with Flutter and native Android.
-            I've built and deployed more than ten production apps that are live on Google Play and the App Store.
-          </p>
-          <p>
-            I take an app from the first screen to a published store listing, and I also work on apps that are already
-            live: upgrading old codebases, fixing memory leaks, and removing the lag that makes users uninstall.
-          </p>
-        </section>
-
-        <section class="stats-row">
-          <div class="stat-card content-card">
-            <strong class="stat-num">10+</strong>
-            <span>apps in production</span>
-          </div>
-          <div class="stat-card content-card">
-            <strong class="stat-num">2</strong>
-            <span>platforms: Android &amp; iOS</span>
-          </div>
-          <div class="stat-card content-card">
-            <strong class="stat-num">2</strong>
-            <span>stores: Play &amp; App Store</span>
-          </div>
-        </section>
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What I do</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Flutter apps</h4>
-                <p class="service-item-text">One codebase that ships to both Android and iOS, built for production.</p>
-              </div>
-            </li>
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Native Android</h4>
-                <p class="service-item-text">Native Android development, upgrades and long-term maintenance.</p>
-              </div>
-            </li>
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-speed.svg" alt="" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Performance fixes</h4>
-                <p class="service-item-text">Tracking down memory leaks and UI lag so apps stay smooth.</p>
-              </div>
-            </li>
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg" alt="" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Store releases</h4>
-                <p class="service-item-text">Store listings, review submissions, and updates after launch.</p>
-              </div>
-            </li>
-
-          </ul>
-
-        </section>
-
-        <section class="tech">
-          <h3 class="h3 service-title">Tech I work with</h3>
-          <ul class="tech-list">
-            <li class="tech-chip"><ion-icon name="logo-flutter"></ion-icon>Flutter</li>
-            <li class="tech-chip"><ion-icon name="code-slash-outline"></ion-icon>Dart</li>
-            <li class="tech-chip"><ion-icon name="logo-android"></ion-icon>Android</li>
-            <li class="tech-chip"><ion-icon name="logo-apple"></ion-icon>iOS</li>
-            <li class="tech-chip"><ion-icon name="logo-google-playstore"></ion-icon>Google Play</li>
-            <li class="tech-chip"><ion-icon name="logo-apple-appstore"></ion-icon>App Store</li>
-            <li class="tech-chip"><ion-icon name="speedometer-outline"></ion-icon>Profiling</li>
-            <li class="tech-chip"><ion-icon name="git-branch-outline"></ion-icon>Git</li>
-          </ul>
-        </section>
-
-      </article>
-
-
-      <!-- RESUME -->
-      <article class="resume" data-page="resume">
-
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
-            <h3 class="h3">Experience</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">Mobile Application Developer</h4>
-              <span>Flutter &amp; Android · Present</span>
-              <p class="timeline-text">
-                Building and shipping mobile apps end to end. More than ten apps deployed to production on
-                Google Play and the App Store.
-              </p>
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box"><ion-icon name="construct-outline"></ion-icon></div>
-            <h3 class="h3">Current projects</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">UC Cricket</h4>
-              <span>Android</span>
-              <p class="timeline-text">
-                Upgrading the codebase and running a performance pass to remove memory leaks and UI lag.
-              </p>
-            </li>
-
-            <li class="timeline-item">
-              <h4 class="h4 timeline-item-title">Next Ranker</h4>
-              <span>Android + web admin panel</span>
-              <p class="timeline-text">
-                An Android app paired with a web admin panel, tested together end to end.
-              </p>
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">Core skills</h3>
-
-          <ul class="skills-list content-card skill-grid">
-            <li><ion-icon name="layers-outline"></ion-icon><div><h5 class="h5">Cross-platform apps</h5><p>Flutter apps for Android and iOS from one codebase</p></div></li>
-            <li><ion-icon name="logo-android"></ion-icon><div><h5 class="h5">Native Android</h5><p>Building, upgrading and maintaining Android apps</p></div></li>
-            <li><ion-icon name="pulse-outline"></ion-icon><div><h5 class="h5">Performance</h5><p>Memory leak fixes, smoother scrolling, faster screens</p></div></li>
-            <li><ion-icon name="rocket-outline"></ion-icon><div><h5 class="h5">Publishing</h5><p>Play Store and App Store releases and updates</p></div></li>
-          </ul>
-
-        </section>
-
-      </article>
-
-
-      <!-- PORTFOLIO -->
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <ul class="filter-list">
-            <li class="filter-item"><button class="active" data-filter-btn>All</button></li>
-            <li class="filter-item"><button data-filter-btn>In development</button></li>
-            <li class="filter-item"><button data-filter-btn>Live</button></li>
-          </ul>
-
-          <div class="filter-select-box">
-            <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select category</div>
-              <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
-            </button>
-            <ul class="select-list">
-              <li class="select-item"><button data-select-item>All</button></li>
-              <li class="select-item"><button data-select-item>In development</button></li>
-              <li class="select-item"><button data-select-item>Live</button></li>
-            </ul>
-          </div>
-
-          <ul class="project-list">
-
-            <li class="project-item active" data-filter-item data-category="in development">
-              <a href="#" data-project-link>
-                <figure class="project-img">
-                  <div class="project-item-icon-box"><ion-icon name="eye-outline"></ion-icon></div>
-                  <img src="./assets/images/project-uccricket.svg" alt="UC Cricket app screen" loading="lazy">
-                </figure>
-                <h3 class="project-title">UC Cricket</h3>
-                <p class="project-category">Android · Performance upgrade</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="in development">
-              <a href="#" data-project-link>
-                <figure class="project-img">
-                  <div class="project-item-icon-box"><ion-icon name="eye-outline"></ion-icon></div>
-                  <img src="./assets/images/project-nextranker.svg" alt="Next Ranker app and admin panel" loading="lazy">
-                </figure>
-                <h3 class="project-title">Next Ranker</h3>
-                <p class="project-category">Android · Web admin panel</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="live">
-              <a href="#" data-project-link>
-                <figure class="project-img">
-                  <div class="project-item-icon-box"><ion-icon name="eye-outline"></ion-icon></div>
-                  <img src="./assets/images/project-more.svg" alt="Ten plus apps live" loading="lazy">
-                </figure>
-                <h3 class="project-title">10+ production apps</h3>
-                <p class="project-category">Flutter &amp; Android · Live</p>
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-      <!-- CONTACT -->
-      <article class="contact" data-page="contact">
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="contact-hero content-card">
-          <h3 class="h3">Have an app to build or fix?</h3>
-          <p>
-            I take on new Flutter and Android builds, and live apps that need to run faster.
-            Send me a message and tell me about your project.
-          </p>
-          <div class="contact-actions">
-            <a class="form-btn" href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener">
-              <ion-icon name="logo-linkedin"></ion-icon><span>Message on LinkedIn</span>
-            </a>
-            <a class="form-btn ghost" href="https://github.com/vinayak-repo" target="_blank" rel="noopener">
-              <ion-icon name="logo-github"></ion-icon><span>View GitHub</span>
-            </a>
-          </div>
-        </section>
-
-      </article>
-
     </div>
 
-  </main>
-
-  <!-- Project details modal -->
-  <div class="modal-container" data-modal-container>
-    <div class="overlay" data-overlay></div>
-    <section class="project-modal">
-      <button class="modal-close-btn" data-modal-close-btn aria-label="Close"><ion-icon name="close-outline"></ion-icon></button>
-      <img src="" alt="" data-modal-img>
-      <h4 class="h3" data-modal-title></h4>
-      <p class="project-category" data-modal-cat></p>
-      <p data-modal-text></p>
-    </section>
+    <div class="phones fade-up" style="animation-delay:.3s" aria-label="Phone mockups of UC Cricket and Next Ranker">
+      <div class="phone back">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="sb"><span>9:41</span><span>●●●</span></div>
+          <div class="app">
+            <div class="app-h"><b>Next Ranker</b><span class="tag">SYNCED</span></div>
+            <div class="podium"><div class="p2"><span></span>2</div><div class="p1"><span></span>1</div><div class="p3"><span></span>3</div></div>
+            <div class="lb">
+              <div class="r top"><span class="n">01</span><span class="av" style="background:#F7C64E"></span><span class="bar"><i style="width:95%"></i></span><b>982</b></div>
+              <div class="r"><span class="n">02</span><span class="av" style="background:#6D7CFF"></span><span class="bar"><i style="width:86%"></i></span><b>914</b></div>
+              <div class="r"><span class="n">03</span><span class="av" style="background:#4AE3A0"></span><span class="bar"><i style="width:78%"></i></span><b>871</b></div>
+              <div class="r"><span class="n">04</span><span class="av" style="background:#FF8A6B"></span><span class="bar"><i style="width:69%"></i></span><b>806</b></div>
+            </div>
+          </div>
+          <div class="tabbar"><i></i><i class="on"></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="phone front">
+        <div class="screen">
+          <div class="island"></div>
+          <div class="sb"><span>9:41</span><span>●●●</span></div>
+          <div class="app">
+            <div class="app-h"><b>UC Cricket</b><span class="tag red">● LIVE</span></div>
+            <div class="score">
+              <small>Team A · 18.2 overs</small>
+              <span class="big">186/4</span>
+              <small>Run rate 10.14 · Team B yet to bat</small>
+            </div>
+            <div class="balls"><i>1</i><i class="f">4</i><i>0</i><i class="s">6</i><i class="w">W</i><i>2</i></div>
+            <div class="player"><span class="av" style="background:#4AE3A0"></span><span class="meta"><b>Batter 1</b><small>Striker</small></span><b style="color:var(--g1)">72 (41)</b></div>
+            <div class="player"><span class="av" style="background:#6D7CFF"></span><span class="meta"><b>Batter 2</b><small>Non-striker</small></span><b>31 (22)</b></div>
+            <div class="row"><span>Partnership</span><b>48 (27)</b></div>
+          </div>
+          <div class="tabbar"><i class="on"></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="float f1"><span class="ic" style="background:rgba(74,227,160,.15);color:var(--g1)"><svg><use href="#i-play"/></svg></span><span>Google Play<small>Apps live</small></span></div>
+      <div class="float f2"><span class="ic" style="background:rgba(255,255,255,.1)"><svg><use href="#i-apple"/></svg></span><span>App Store<small>Apps live</small></span></div>
+      <div class="float f3"><span class="ic" style="background:rgba(34,199,224,.15);color:var(--g2)"><svg><use href="#i-flutter"/></svg></span><span>Built with Flutter<small>One codebase, two stores</small></span></div>
+    </div>
   </div>
+</header>
 
-  <template id="project-details">
-    <p data-for="UC Cricket">An Android cricket app. I'm upgrading the codebase and running a performance pass to remove memory leaks and UI lag.</p>
-    <p data-for="Next Ranker">An Android app with its own web admin panel. The panel controls what the app shows, and I test the two together end to end.</p>
-    <p data-for="10+ production apps">More than ten apps shipped to Google Play and the App Store with Flutter and Android. Message me on LinkedIn for store links and a walkthrough.</p>
-  </template>
+<div class="marquee" aria-label="Technologies">
+  <div class="track" aria-hidden="true">
+    <span><svg style="color:#4FC3F7"><use href="#i-flutter"/></svg>Flutter</span><span><svg style="color:#29B6F6"><use href="#i-dart"/></svg>Dart</span><span><svg style="color:#4AE3A0"><use href="#i-android"/></svg>Android</span><span><svg><use href="#i-apple"/></svg>iOS</span><span><svg style="color:#4AE3A0"><use href="#i-play"/></svg>Google Play</span><span><svg style="color:#6D7CFF"><use href="#i-store"/></svg>App Store</span><span><svg style="color:#F7C64E"><use href="#i-speed"/></svg>Performance</span><span><svg style="color:#FF8A6B"><use href="#i-git"/></svg>Git</span>
+    <span><svg style="color:#4FC3F7"><use href="#i-flutter"/></svg>Flutter</span><span><svg style="color:#29B6F6"><use href="#i-dart"/></svg>Dart</span><span><svg style="color:#4AE3A0"><use href="#i-android"/></svg>Android</span><span><svg><use href="#i-apple"/></svg>iOS</span><span><svg style="color:#4AE3A0"><use href="#i-play"/></svg>Google Play</span><span><svg style="color:#6D7CFF"><use href="#i-store"/></svg>App Store</span><span><svg style="color:#F7C64E"><use href="#i-speed"/></svg>Performance</span><span><svg style="color:#FF8A6B"><use href="#i-git"/></svg>Git</span>
+  </div>
+</div>
 
-  <script src="./assets/js/script.js"></script>
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="head reveal">
+      <span class="eyebrow">About me</span>
+      <h2 class="sec-title">From first screen to <span class="grad">store listing.</span></h2>
+    </div>
+    <div class="bento">
+      <div class="tile t-intro reveal">
+        <div class="who">
+          <img src="./assets/images/avatar.svg" alt="Vinayak Shukla">
+          <div><b>Vinayak Shukla</b><small>Flutter &amp; Android Developer</small></div>
+        </div>
+        <p class="bio">I build mobile apps with <b>Flutter</b> and <b>native Android</b>, and I see them all the way to Google Play and the App Store. I also work on apps that are already live: upgrading old codebases, fixing <b>memory leaks</b> and removing the <b>lag</b> that makes users uninstall.</p>
+        <a class="btn btn-ghost magnet" style="align-self:flex-start" href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener"><svg style="width:17px;height:17px"><use href="#i-linkedin"/></svg>Connect on LinkedIn</a>
+      </div>
+      <div class="tile t-num reveal">
+        <span class="n grad" data-count="10">10+</span>
+        <div><h3>Apps in production</h3><p>Live and used every day.</p></div>
+      </div>
+      <div class="tile t-plat reveal">
+        <div class="plat-icons"><span style="color:var(--g1)"><svg><use href="#i-android"/></svg></span><span><svg><use href="#i-apple"/></svg></span></div>
+        <div><h3>Android &amp; iOS</h3><p>Shipped on both stores.</p></div>
+      </div>
+      <div class="tile t-now reveal">
+        <h3>Currently working on</h3>
+        <div class="now-list">
+          <div><span class="pl"></span><b>UC Cricket</b><small>Performance upgrade</small></div>
+          <div><span class="pl" style="background:var(--g3)"></span><b>Next Ranker</b><small>App + admin panel testing</small></div>
+        </div>
+      </div>
+      <div class="tile t-stack reveal">
+        <h3>Tech stack</h3>
+        <div class="chips">
+          <span class="chip"><svg style="color:#4FC3F7"><use href="#i-flutter"/></svg>Flutter</span>
+          <span class="chip"><svg style="color:#29B6F6"><use href="#i-dart"/></svg>Dart</span>
+          <span class="chip"><svg style="color:#4AE3A0"><use href="#i-android"/></svg>Android</span>
+          <span class="chip"><svg><use href="#i-apple"/></svg>iOS</span>
+          <span class="chip"><svg style="color:#4AE3A0"><use href="#i-play"/></svg>Play Console</span>
+          <span class="chip"><svg style="color:#6D7CFF"><use href="#i-store"/></svg>App Store Connect</span>
+          <span class="chip"><svg style="color:#FF8A6B"><use href="#i-git"/></svg>Git</span>
+        </div>
+      </div>
+      <div class="tile t-hire reveal">
+        <div><h3>Have an app idea?</h3><p>Let's turn it into something people download.</p></div>
+        <a class="btn magnet" href="#contact">Start a project <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- WORK -->
+<section id="work" style="padding-top:40px">
+  <div class="container">
+    <div class="head reveal">
+      <span class="eyebrow">Selected work</span>
+      <h2 class="sec-title">Apps I'm building <span class="grad">right now.</span></h2>
+      <p class="sec-sub">A look at my current projects. More than ten other apps are already live on the stores.</p>
+    </div>
+    <div class="work">
+      <article class="proj reveal">
+        <div class="proj-media"><img src="./assets/images/project-uccricket.svg" alt="UC Cricket live score screen" loading="lazy"></div>
+        <div class="proj-body">
+          <span class="status">In development</span>
+          <h3>UC Cricket</h3>
+          <p>An Android cricket app with live match screens. I'm upgrading the codebase and making it faster and more stable.</p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg>Codebase upgrade to current Android standards</li>
+            <li><svg><use href="#i-check"/></svg>Finding and fixing memory leaks</li>
+            <li><svg><use href="#i-check"/></svg>Removing UI lag for smooth scrolling</li>
+          </ul>
+          <div class="tags"><span>Android</span><span>Performance</span><span>Profiling</span></div>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-media"><img src="./assets/images/project-nextranker.svg" alt="Next Ranker app and web admin panel" loading="lazy"></div>
+        <div class="proj-body">
+          <span class="status">Testing</span>
+          <h3>Next Ranker</h3>
+          <p>An Android app paired with its own web admin panel. The panel controls what users see in the app.</p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg>Android app with leaderboard screens</li>
+            <li><svg><use href="#i-check"/></svg>Web admin panel to manage content</li>
+            <li><svg><use href="#i-check"/></svg>End-to-end testing of app and panel together</li>
+          </ul>
+          <div class="tags"><span>Android</span><span>Admin panel</span><span>QA</span></div>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-media"><img src="./assets/images/project-more.svg" alt="Ten plus apps live on Google Play and the App Store" loading="lazy"></div>
+        <div class="proj-body">
+          <span class="status live">Live on both stores</span>
+          <h3>10+ production apps</h3>
+          <p>Apps built with Flutter and Android, published on Google Play and the App Store, and used every day.</p>
+          <div class="tags"><span>Flutter</span><span>Android</span><span>iOS</span></div>
+          <a class="btn btn-ghost magnet" style="align-self:flex-start;margin-top:6px" href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener">Ask me for store links <svg><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="padding-top:40px">
+  <div class="container">
+    <div class="head reveal">
+      <span class="eyebrow">Services</span>
+      <h2 class="sec-title">What I can do <span class="grad">for you.</span></h2>
+    </div>
+    <div class="services">
+      <div class="svc reveal"><div class="ic"><svg><use href="#i-layers"/></svg></div><h3>Flutter apps</h3><p>One codebase for Android and iOS, built and ready for production.</p></div>
+      <div class="svc reveal"><div class="ic"><svg><use href="#i-android"/></svg></div><h3>Native Android</h3><p>New Android apps, upgrades of older ones, and long-term maintenance.</p></div>
+      <div class="svc reveal"><div class="ic"><svg><use href="#i-speed"/></svg></div><h3>Performance fixes</h3><p>Memory leaks, slow screens and laggy scrolling found and fixed.</p></div>
+      <div class="svc reveal"><div class="ic"><svg><use href="#i-rocket"/></svg></div><h3>Store publishing</h3><p>Play Store and App Store listings, review submissions and updates.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" style="padding-top:40px">
+  <div class="container">
+    <div class="head reveal" style="text-align:center">
+      <span class="eyebrow">How I work</span>
+      <h2 class="sec-title" style="margin-inline:auto">Idea to app store in <span class="grad">four steps.</span></h2>
+    </div>
+    <div class="process">
+      <div class="step reveal"><div class="n">1</div><h3>Plan</h3><p>We agree on screens, features and timeline before any code.</p></div>
+      <div class="step reveal"><div class="n">2</div><h3>Build</h3><p>Flutter or native Android, with regular builds you can try.</p></div>
+      <div class="step reveal"><div class="n">3</div><h3>Test</h3><p>Real devices, end-to-end checks, and profiling for speed.</p></div>
+      <div class="step reveal"><div class="n">4</div><h3>Launch</h3><p>Published on the stores, with support for updates after.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-top:40px">
+  <div class="container">
+    <div class="contact-card reveal">
+      <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+      <span class="eyebrow">Contact</span>
+      <h2>Let's build your <span class="grad">next app</span> together.</h2>
+      <p>New Flutter or Android app, or a live app that needs to run faster. Send me a message and I'll get back to you.</p>
+      <div class="ctas">
+        <a class="btn btn-primary magnet" href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener"><svg style="width:17px;height:17px"><use href="#i-linkedin"/></svg>Message on LinkedIn</a>
+        <a class="btn btn-ghost magnet" href="https://github.com/vinayak-repo" target="_blank" rel="noopener"><svg style="width:17px;height:17px"><use href="#i-github"/></svg>GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Vinayak Shukla · Flutter &amp; Android Developer</span>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/vinayak-shukla-046a9722a/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
+      <a href="https://github.com/vinayak-repo" target="_blank" rel="noopener" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+
+  // Nav state, progress bar, active link
+  const nav = document.getElementById('nav'), bar = document.getElementById('progress');
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  const onScroll = () => {
+    const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    nav.classList.toggle('scrolled', y > 30);
+    bar.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
+    let cur = -1; secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * .35) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('on', i === cur));
+  };
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // Scroll reveal with stagger (only for items below the fold)
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.remove('hide'); io.unobserve(e.target); }
+    }), {threshold:.12, rootMargin:'0px 0px -60px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => {
+      if (el.getBoundingClientRect().top > innerHeight * .9) {
+        const sibs = [...el.parentElement.children].filter(c => c.classList.contains('reveal'));
+        el.style.transitionDelay = (Math.max(0, sibs.indexOf(el)) % 4) * 90 + 'ms';
+        el.classList.add('hide'); io.observe(el);
+      }
+    });
+  }
+
+  // Count-up for the 10+ tile
+  document.querySelectorAll('[data-count]').forEach(el => {
+    if (reduce || !('IntersectionObserver' in window)) return;
+    const end = +el.dataset.count;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return; io.disconnect();
+      const t0 = performance.now();
+      const tick = t => { const p = Math.min(1, (t - t0) / 1200); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + '+'; if (p < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }, {threshold:.6});
+    io.observe(el);
+  });
+
+  // Spotlight on tiles
+  document.querySelectorAll('.tile').forEach(t => t.addEventListener('pointermove', e => {
+    const r = t.getBoundingClientRect();
+    t.style.setProperty('--mx', (e.clientX - r.left) + 'px'); t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }));
+
+  // Cursor glow + magnetic buttons (mouse only)
+  if (fine && !reduce) {
+    const glow = document.getElementById('glow');
+    addEventListener('pointermove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+    document.querySelectorAll('.magnet').forEach(b => {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .18}px, ${(e.clientY - r.top - r.height / 2) * .3}px)`;
+      });
+      b.addEventListener('pointerleave', () => b.style.transform = '');
+    });
+    // Phone parallax
+    const phones = document.querySelector('.phones');
+    addEventListener('pointermove', e => {
+      const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+      phones.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 6}deg)`;
+    });
+  }
+
+  // Starfield
+  const c = document.getElementById('stars'), ctx = c.getContext('2d');
+  let w, h, stars = [];
+  const size = () => {
+    const d = Math.min(devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight; c.width = w * d; c.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+    stars = Array.from({length: Math.round(w * h / 9000)}, () => ({x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.2 + .2, s: Math.random() * .25 + .05, a: Math.random()}));
+  };
+  size(); addEventListener('resize', size);
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      if (!reduce) { s.y -= s.s; if (s.y < 0) { s.y = h; s.x = Math.random() * w; } s.a += .01; }
+      ctx.globalAlpha = .25 + Math.abs(Math.sin(s.a)) * .5;
+      ctx.fillStyle = '#BFE9FF'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill();
+    }
+    if (!reduce) requestAnimationFrame(draw);
+  };
+  draw();
+})();
+</script>
 </body>
-
 </html>
