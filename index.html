@@ -225,6 +225,22 @@ section{padding:120px 0}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .tags span{font-size:12px;font-weight:600;padding:6px 11px;border-radius:9px;background:var(--card2);border:1px solid var(--line);color:#AEB8C9}
 
+
+.phone .screen .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.shots-media{display:flex;align-items:center;background:radial-gradient(circle at 30% 20%,rgba(74,227,160,.22),transparent 60%),linear-gradient(160deg,#0E2A22,#0B1424)}
+.shots{display:flex;gap:16px;padding:36px 32px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;width:100%}
+.shots img{height:380px;width:auto;flex-shrink:0;border-radius:18px;scroll-snap-align:start;box-shadow:0 24px 50px -20px rgba(0,0,0,.8);border:1px solid var(--line2);transition:transform .5s var(--ease)}
+.proj:hover .shots img{transform:translateY(-6px)}
+.proj:hover .shots-media img{transform:translateY(-6px)}
+.shots img:nth-child(even){margin-top:30px}
+.app-id{display:flex;align-items:center;gap:14px}
+.app-id img{width:56px;height:56px;border-radius:14px;box-shadow:0 10px 30px -10px rgba(0,0,0,.7)}
+.kpis{display:flex;gap:28px;flex-wrap:wrap;padding:14px 0;border-block:1px solid var(--line)}
+.kpis div{display:grid}
+.kpis strong{font-family:var(--head);font-size:22px;font-weight:700}
+.kpis span{font-size:12px;color:var(--dim)}
+@media (max-width:680px){.shots img{height:300px}.shots{padding:24px 18px}}
+
 /* Services */
 .services{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .svc{position:relative;padding:30px 26px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .4s var(--ease),border-color .4s}
@@ -381,23 +397,10 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
       <div class="phone front">
         <div class="screen">
           <div class="island"></div>
-          <div class="sb"><span>9:41</span><span>●●●</span></div>
-          <div class="app">
-            <div class="app-h"><b>UC Cricket</b><span class="tag red">● LIVE</span></div>
-            <div class="score">
-              <small>Team A · 18.2 overs</small>
-              <span class="big">186/4</span>
-              <small>Run rate 10.14 · Team B yet to bat</small>
-            </div>
-            <div class="balls"><i>1</i><i class="f">4</i><i>0</i><i class="s">6</i><i class="w">W</i><i>2</i></div>
-            <div class="player"><span class="av" style="background:#4AE3A0"></span><span class="meta"><b>Batter 1</b><small>Striker</small></span><b style="color:var(--g1)">72 (41)</b></div>
-            <div class="player"><span class="av" style="background:#6D7CFF"></span><span class="meta"><b>Batter 2</b><small>Non-striker</small></span><b>31 (22)</b></div>
-            <div class="row"><span>Partnership</span><b>48 (27)</b></div>
-          </div>
-          <div class="tabbar"><i class="on"></i><i></i><i></i><i></i></div>
+          <img class="shot" src="https://play-lh.googleusercontent.com/Qk5IG0X8QxuGcXYGSDja6EXZbIyl6amTIwWmA4Q_PPh0fv5noXfGP6efkl4vCrMP9TwyONYJYj70UKdOGTITlg=w720" alt="UC Cricket app screenshot" referrerpolicy="no-referrer">
         </div>
       </div>
-      <div class="float f1"><span class="ic" style="background:rgba(74,227,160,.15);color:var(--g1)"><svg><use href="#i-play"/></svg></span><span>Google Play<small>Apps live</small></span></div>
+      <div class="float f1"><span class="ic" style="background:rgba(74,227,160,.15);color:var(--g1)"><svg><use href="#i-play"/></svg></span><span>UC Cricket<small>100K+ downloads</small></span></div>
       <div class="float f2"><span class="ic" style="background:rgba(255,255,255,.1)"><svg><use href="#i-apple"/></svg></span><span>App Store<small>Apps live</small></span></div>
       <div class="float f3"><span class="ic" style="background:rgba(34,199,224,.15);color:var(--g2)"><svg><use href="#i-flutter"/></svg></span><span>Built with Flutter<small>One codebase, two stores</small></span></div>
     </div>
@@ -472,17 +475,17 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
     </div>
     <div class="work">
       <article class="proj reveal">
-        <div class="proj-media"><img src="./assets/images/project-uccricket.svg" alt="UC Cricket live score screen" loading="lazy"></div>
+        <div class="proj-media shots-media"><div class="shots" aria-label="UC Cricket screenshots"><img src="https://play-lh.googleusercontent.com/Qk5IG0X8QxuGcXYGSDja6EXZbIyl6amTIwWmA4Q_PPh0fv5noXfGP6efkl4vCrMP9TwyONYJYj70UKdOGTITlg=w720" alt="UC Cricket screenshot 1" loading="lazy" referrerpolicy="no-referrer"><img src="https://play-lh.googleusercontent.com/b5uPfZFrGZCPuQLHo-9j8U--UwFr4fEQVfpV1d5FxAJG0G2CaX1ED0j0CeK27an2EEtDvvitL6sGFk3H6It3xw=w720" alt="UC Cricket screenshot 2" loading="lazy" referrerpolicy="no-referrer"><img src="https://play-lh.googleusercontent.com/cXrqye0LU8vv-BhsRCFfaum1uUTmVQJmElXWSScgpVmZVqrdk19XLsnwD7bDgplX-AGvhxJFiuehLGgPZbfu=w720" alt="UC Cricket screenshot 3" loading="lazy" referrerpolicy="no-referrer"><img src="https://play-lh.googleusercontent.com/Bea8jGNYan8SI0xTRdDS7a1qfodQfjfKUqsMMi8J7DhareYD8qGB6hBN5zIOKU57yAwLZMar_dKSkuPLD2PkvA=w720" alt="UC Cricket screenshot 4" loading="lazy" referrerpolicy="no-referrer"><img src="https://play-lh.googleusercontent.com/csw_EllK_l55Fgprp-OPZtTnpJFIPe76-ESmjrcpY1rLgpkem6g00mVCTSY4GYj_O_RUkCMFPjOh6tsbmCM0tw=w720" alt="UC Cricket screenshot 5" loading="lazy" referrerpolicy="no-referrer"></div></div>
         <div class="proj-body">
-          <span class="status">In development</span>
+          <div class="app-id"><img src="https://play-lh.googleusercontent.com/ome5GS7yYhIVjW5PVn4_vVmJ6Csl1X3Fsyyywo5cVioPncs2OrnOwm4dd9amo85Rzhq04hGi-II60YWB1PaYi9A=w240-h480" alt="UC Cricket icon" referrerpolicy="no-referrer"><div><span class="status live">Live on Google Play</span></div></div>
           <h3>UC Cricket</h3>
-          <p>An Android cricket app with live match screens. I'm upgrading the codebase and making it faster and more stable.</p>
+          <p>A cricket app for live scores, match schedules, news, stats and predictions. Now I'm upgrading it and making it faster and more stable.</p>
+          <div class="kpis"><div><strong>100K+</strong><span>Downloads</span></div><div><strong>Sports</strong><span>Category</span></div><div><strong>Android</strong><span>Platform</span></div></div>
           <ul>
-            <li><svg><use href="#i-check"/></svg>Codebase upgrade to current Android standards</li>
-            <li><svg><use href="#i-check"/></svg>Finding and fixing memory leaks</li>
+            <li><svg><use href="#i-check"/></svg>Codebase upgrade and memory leak fixes</li>
             <li><svg><use href="#i-check"/></svg>Removing UI lag for smooth scrolling</li>
           </ul>
-          <div class="tags"><span>Android</span><span>Performance</span><span>Profiling</span></div>
+          <a class="btn btn-primary magnet" style="align-self:flex-start;margin-top:6px" href="https://play.google.com/store/apps/details?id=com.app.uccricket" target="_blank" rel="noopener"><svg style="width:17px;height:17px"><use href="#i-play"/></svg>Get it on Google Play</a>
         </div>
       </article>
 
